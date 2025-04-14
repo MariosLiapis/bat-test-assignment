@@ -15,7 +15,7 @@ def calculate_bat_power():
 
 
 """
-A function that uses pytest parametrization
+A test that uses pytest parametrization
 to test signal_strength with various distances
 """
 
@@ -26,3 +26,35 @@ to test signal_strength with various distances
 def signal_strength(distance, expected):
 
     assert signal_strength(distance) == expected
+
+"""
+A pytest.fixture that sets up a reusable dictionary
+of bat vehicles 
+"""
+@pytest.fixture
+def bat_vehicles():
+    return {
+        'Batmobile' : {'speed': 200, 'armor':80},
+        'Batwing' : {'speed': 300, 'armor': 60},
+        'Batcycle' : {'speed': 150, 'armor': 50}
+    }
+
+"""
+A test that returns correct specifications 
+for known vehicles 
+"""
+def test_get_known_vehicle(bat_vehicles: dict[str, dict[str, int]]):
+    for name, expected_specs in bat_vehicles.items():
+        result = get_bat_vehicle(name)
+        assert result == expected_specs, f"Expected specs for {name} do not match."
+
+"""
+A test that raises error for the unknown vehicles
+"""
+def test_get_invalid_bat_vehicle(bat_vehicles):
+    invalid_names = ["Batbike", "Batboat", "Batmarine", "", "bt", "batmobil", "BATMOBILE"]
+
+    for name in invalid_names:
+        assert name not in bat_vehicles
+        with pytest.raises(ValueError, match=r"Unknown vehicles: .*"):
+            get_bat_vehicle(name)
