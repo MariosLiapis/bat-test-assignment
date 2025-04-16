@@ -57,7 +57,7 @@ def test_get_invalid_bat_vehicle(bat_vehicles):
 
     for name in invalid_names:
         assert name not in bat_vehicles
-        with pytest.raises(ValueError, match=r"Unknown vehicles: .*"):
+        with pytest.raises(ValueError, match=r"Unknown vehicle: .*"):
             get_bat_vehicle(name)
 
 """
