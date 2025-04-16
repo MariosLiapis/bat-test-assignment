@@ -1,4 +1,5 @@
 import pytest
+from unittest.mock import patch
 from bat_functions import *
 
 """
@@ -58,3 +59,11 @@ def test_get_invalid_bat_vehicle(bat_vehicles):
         assert name not in bat_vehicles
         with pytest.raises(ValueError, match=r"Unknown vehicles: .*"):
             get_bat_vehicle(name)
+
+@patch("bat_functions.time.sleep", return_value=None)
+def test_fetch_joker_info(mock_sleep):
+    result = fetch_joker_info()
+
+    assert result == {'mischief_level': 100, 'location': 'unknown'}
+
+    mock_sleep.asset_called_once_with(1)
