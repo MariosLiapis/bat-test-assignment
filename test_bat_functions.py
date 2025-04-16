@@ -70,6 +70,7 @@ def test_mock_fetch_joker_info(mocker):
 
     mocker.patch("bat_functions.fetch_joker_info", return_value=mock_response)
     
-    result = fetch_joker_info()
+    import bat_functions
+    result = bat_functions.fetch_joker_info()
 
     assert result == mock_response
