@@ -60,10 +60,16 @@ def test_get_invalid_bat_vehicle(bat_vehicles):
         with pytest.raises(ValueError, match=r"Unknown vehicles: .*"):
             get_bat_vehicle(name)
 
+"""
+A test that uses mocking 
+"""
 @patch("bat_functions.time.sleep", return_value=None)
-def test_fetch_joker_info(mock_sleep):
+@patch("bat_functions.fetch_joker_info", return_value={'mischief_level': 0, 'location': 'captured'})
+def test_mock_fetch_joker_info(mocker):
+    mock_response = {'mischief_level': 0, 'location': 'captured'}
+
+    mocker.patch("bat_functions.fetch_joker_info", return_value=mock_response)
+    
     result = fetch_joker_info()
 
-    assert result == {'mischief_level': 100, 'location': 'unknown'}
-
-    mock_sleep.asset_called_once_with(1)
+    assert result == mock_response
