@@ -61,10 +61,10 @@ def test_get_invalid_bat_vehicle(bat_vehicles):
             get_bat_vehicle(name)
 
 """
-A test that uses mocking 
+A test that is mocking the entire function without using delay
+and returning a custom dictionary
 """
-@patch("bat_functions.time.sleep", return_value=None)
-@patch("bat_functions.fetch_joker_info", return_value={'mischief_level': 0, 'location': 'captured'})
+
 def test_mock_fetch_joker_info(mocker):
     mock_response = {'mischief_level': 0, 'location': 'captured'}
 
